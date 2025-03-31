@@ -1,0 +1,18 @@
+﻿@model IEnumerable<string>
+
+<div class="list-group">
+    <a class="list-group-item list-group-item-action btn btn-outline-secondary @(ViewBag.SelectedCategory == null ? "active btn-primary" : "")" asp-action="Index"
+       asp-controller="Home" asp-route-category="">
+        Home
+    </a>
+
+    @foreach (string category in Model)
+    {
+        <a class="list-group-item list-group-item-action btn btn-outline-secondary @(category == ViewBag.SelectedCategory?.ToString() ? "active btn-primary": "")"
+           asp-action="Index" asp-controller="Home"
+           asp-route-category="@category"
+           asp-route-productPage="1">
+            @category
+        </a>
+    }
+</div>
