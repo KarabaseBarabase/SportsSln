@@ -1,16 +1,21 @@
-﻿version: "3"
-services:
-  sportsstore: 
-   build: .
-   ports:
-    - "5000:5000"
-   environment:
-    - ASPNETCORE_ENVIRONMENT=Production
-   depends_on:
-    - sqlserver
+﻿services:
+  sportsstore:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - ConnectionStrings__SportsStoreConnection=Server=sqlserver;Database=SportsStore;User Id=sa;Password=YourPassword123!;TrustServerCertificate=true;MultipleActiveResultSets=true
+      - ConnectionStrings__IdentityConnection=Server=sqlserver;Database=Identity;User Id=sa;Password=YourPassword123!;TrustServerCertificate=true;MultipleActiveResultSets=true
+    depends_on:
+      - sqlserver
+
   sqlserver:
-   image: "mcr.microsoft.com/mssql/server"
-   environment:
-    SA_PASSWORD: "MyDatabaseSecret123"
-    ACCEPT_EULA: "Y"
-    
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - SA_PASSWORD=YourPassword123!
+      - ACCEPT_EULA=Y
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+volumes:
+  sqlserver_data:
